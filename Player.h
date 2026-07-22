@@ -1,5 +1,6 @@
 #pragma once
 #include "raylib.h"
+#include "Bullet.h"
 
 class Player {
 	public:
@@ -12,4 +13,6 @@ class Player {
 		void Update();
 		void Draw();
 		void FaceMouse();
+		Vector2 GetCenter();
+		Projectile Shoot();
 };
