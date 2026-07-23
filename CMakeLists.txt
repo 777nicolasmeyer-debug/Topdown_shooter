@@ -18,6 +18,9 @@ add_executable(
     Bullet.cpp
     Bullet.h
 
+    Enemy.cpp
+    Enemy.h 
+
     Topdown_shooter.h
 )
 
