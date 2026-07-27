@@ -8,6 +8,7 @@ class Player {
 		float speed;
 		float dimension;
 		float rotation;
+		int damage;
 		Color color;
 
 		void Update();

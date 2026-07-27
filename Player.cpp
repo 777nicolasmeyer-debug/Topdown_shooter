@@ -40,6 +40,7 @@ Projectile Player::Shoot() {
 		playerCenter.y + sinf(rotation * DEG2RAD) * spawnOffset
 	};
 	bullet.velocity = { cosf(rotation * DEG2RAD) * 10.f, sinf(rotation * DEG2RAD) * 10.f };
+	bullet.active = true;
 
 	return bullet;
 }

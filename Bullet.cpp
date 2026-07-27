@@ -6,5 +6,15 @@ void Projectile::Update() {
 }
 
 void Projectile::Draw() {
-	DrawCircleV(position, radius, color);
+	if (active) {
+		DrawCircleV(position, radius, color);
+	}
+}
+
+Vector2 Projectile::GetPosition() {
+	return position;
+}
+
+float Projectile::GetRadius() {
+	return radius;
 }
