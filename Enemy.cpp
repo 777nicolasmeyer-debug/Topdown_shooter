@@ -2,9 +2,8 @@
 #include "Player.h"
 #include "raylib.h"
 #include <cmath>
-Collisions collision;
-Projectile bullet;
-Enemy enemy;
+class Collisions;
+class Projectile;
 
 void Enemy::Update(Player& player) {
 	if (player.position.x > position.x) {
@@ -58,11 +57,14 @@ Rectangle Enemy::GetRect()
 	};
 }
 
-void Enemy::TakeDamage(int damage) {
-	if (collision.isColliding(bullet, enemy)) {
+void Enemy::TakeDamage(int damage, Enemy& enemy) {
 		health -= damage;
-	}
 	if (health <= 0) {
 		active = false;
 	}
 }
+
+void Enemy::RewardPlayer(Player& player) {
+	player.money += 10;
+}
+

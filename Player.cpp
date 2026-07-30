@@ -58,3 +58,26 @@ void Player::Draw() {
 Vector2 Player::GetCenter() {
 	return { position.x + dimension / 2, position.y + dimension / 2 };
 }
+
+Player::Player() {
+	position = { 400, 400};
+	speed = 5.0f;
+	damage = 5;
+	rotation = 0;
+	dimension = 50.0f;
+	color = RED;
+	health = 50;
+	money = 0;
+	active = true;
+}
+
+Rectangle Player::GetRect()
+{
+	return {
+		position.x,
+		position.y,
+		dimension,
+		dimension
+	};
+}
+									

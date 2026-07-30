@@ -28,6 +28,22 @@ add_executable(
 
     Collisions.cpp
     Collisions.h
+
+    GameManager.h
+    GameState.h
+
+    GameLogic.cpp 
+    GameLogic.h
+
+    Menu.h 
+    Menu.cpp 
+
+    Shop.cpp 
+    Shop.h
+
+    GameOver.cpp
+
+    HandleDamage.cpp
 )
 
 target_link_libraries(Topdown_shooter PRIVATE raylib)

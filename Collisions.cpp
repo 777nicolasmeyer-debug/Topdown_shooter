@@ -11,3 +11,11 @@ bool Collisions::isColliding(Projectile& bullet, Enemy& enemy) {
 		return false;
 	}
 }
+bool Collisions::isCollidingEnt(Player& player, Enemy& enemy) {
+	if (CheckCollisionRecs(player.GetRect(), enemy.GetRect())) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}

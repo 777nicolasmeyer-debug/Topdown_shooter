@@ -1,12 +1,11 @@
-﻿#define RAYGUI_IMPLEMENTATION
+﻿
 
 #include "raylib.h"
-#include "Player.h"
-#include "Bullet.h"
-#include "Enemy.h"
-#include "Spawn_logic.h"
-#include "Collisions.h"
-#include "C:/Users/777ni/OneDrive/Documents/Projects/Libraries/raylib/w64devkit/include/raygui.h"
+#include "GameManager.h"
+#include "GameOver.h"
+#include "GameLogic.h"
+#include "Menu.h"
+#include "Shop.h"
 
 #include <vector>
 
@@ -18,84 +17,36 @@ int main()
     InitWindow(SCREENWIDTH, SCREENHEIGHT, "Test");
 	SetTargetFPS(30);
 
-    Player player;
-    player.position = { SCREENHEIGHT / 2, SCREENHEIGHT / 2 };
-    player.speed = 5.0f;
-    player.damage = 5;
-    player.dimension = 50.0f;
-    player.color = RED;
+    Game game;
+    Menu menu;
+    Shop shop;
+    GameOver gameOver;
 
-    std::vector<Projectile>bullets;
-
-    std::vector<Enemy>enemies;
-  
-    SpawnLogic spawnLogic;
-
-    Collisions collision;
+    GameManager gameManager;
 
     while (!WindowShouldClose())
     {
-		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            bullets.push_back(player.Shoot());
-		}
-
-        if (spawnLogic.CanSpawn())
-        {
-            Enemy enemy;
-
-            enemy.position = spawnLogic.Spawn(SCREENWIDTH, SCREENHEIGHT);
-            enemy.speed = GetRandomValue(1,4);
-            enemy.width = 50.0f;
-            enemy.height = 50.0f;
-            enemy.color = BLUE;
-            enemy.active = true;
-            enemies.push_back(enemy);
+        if (IsKeyPressed(KEY_P)) {
+            gameManager.state = GameState::Menu;
         }
+
+        switch (gameManager.state) {
+        case GameState::Menu:
+            menu.Draw(gameManager);
+            break;
+
+        case GameState::Playing:
+            game.Run(SCREENWIDTH, SCREENHEIGHT, gameManager);
+            break;
         
-        BeginDrawing();
-        ClearBackground(BLACK);
+        case GameState::Shop:
+            shop.Draw(game.GetPlayer());
+            break;
 
-        player.Update();
-		player.FaceMouse();
-        player.Draw();
-
-        // Draw and update enemies
-        for (Enemy& enemy : enemies)
-        {
-            if (enemy.active)
-            {
-                enemy.Update(player);
-                enemy.FacePlayer(player);
-                enemy.Draw();
-            }
+        case GameState::GameOver:
+            gameOver.Draw(gameManager);
+            break;
         }
-
-        // Update and draw bullets
-        for (Projectile& bullet : bullets) {
-            bullet.Update();
-            bullet.Draw();
-
-            // Check collision with all enemies
-            for (Enemy& enemy : enemies) {
-                if (enemy.active && collision.isColliding(bullet, enemy)) {
-                    enemy.TakeDamage(player.damage);
-                    bullet.active = false;
-                }
-            }
-        }
-
-        // Remove dead enemies
-        for (size_t i = 0; i < enemies.size();) {
-            if (!enemies[i].active) {
-                enemies.erase(enemies.begin() + i);
-            }
-            else {
-                i++;
-            }
-        }
-        DrawCircleV(player.GetCenter(), 5, YELLOW);
-
-        EndDrawing();
     }
  CloseWindow();
 }
