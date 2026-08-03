@@ -11,10 +11,13 @@
 
 class Game {
 public:
+	Game();
 	void Run(int SCREENWIDTH, int SCREENHEIGHT, GameManager& gameManager);
 	Player& GetPlayer();
 
 private:
+	Texture2D background;
+	Camera2D camera;
 	Player player;
 	std::vector<Projectile>bullets;
 	std::vector<Enemy>enemies;

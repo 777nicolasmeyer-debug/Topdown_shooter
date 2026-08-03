@@ -8,7 +8,7 @@ private:
 	float damageTimer = 2.0;
 
 public:
-	void DamagePlayer(Player& player, Enemy& enemy) {
+	void DamagePlayer(Player& player, Enemy& enemy, Projectile& bullet) {
 		if (CheckCollisionRecs(player.GetRect(), enemy.GetRect())) {
 			
 			float frameTime = GetFrameTime();
@@ -23,8 +23,18 @@ public:
 				player.active = false;
 			}
 
-			std::cout << enemy.damage << '\n';
-			std::cout << player.health << '\n';
+		}
+
+		if (CheckCollisionCircleRec(bullet.position, bullet.radius, player.GetRect())) {
+			if (bullet.fromPlayer == false) {
+				player.health -= enemy.damage;
+				bullet.active = false;
+				std::cout << player.health;
+			}
+
+			if (player.health <= 0) {
+				player.active = false;
+			}
 		}
 	}
 };

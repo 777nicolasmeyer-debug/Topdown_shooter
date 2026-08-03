@@ -8,6 +8,8 @@ public:
 	float radius = 5.f;
 	bool active;
 	Color color;
+	bool fromPlayer;
+
 
 	void Update();
 	void Draw();

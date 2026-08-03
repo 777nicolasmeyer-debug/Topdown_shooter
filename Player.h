@@ -7,7 +7,7 @@ class Player {
 		Player();
 
 		Vector2 position;
-		float speed;
+		int speed;
 		float dimension;
 		float rotation;
 		int damage;
@@ -15,10 +15,12 @@ class Player {
 		int money;
 		Color color;
 		bool active;
+		Texture2D texture;
 
 		void Update();
-		void Draw();
-		void FaceMouse();
+		void DrawRec();
+		void DrawTex();
+		void FaceMouse(Camera2D& camera);
 		Vector2 GetCenter();
 		Projectile Shoot();
 		Rectangle GetRect();
