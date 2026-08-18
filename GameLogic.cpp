@@ -9,6 +9,7 @@ float shootTimer = GetRandomValue(1, 3);
 
 
 void Game::Run(int SCREENWIDTH, int SCREENHEIGHT, GameManager& gameManager) {
+    spawnLogic.PassData(player.position);
 	if (player.active) {
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             bullets.push_back(player.Shoot());
@@ -18,7 +19,7 @@ void Game::Run(int SCREENWIDTH, int SCREENHEIGHT, GameManager& gameManager) {
         {
             Enemy enemy;
 
-            enemy.position = spawnLogic.Spawn(SCREENWIDTH, SCREENHEIGHT);
+            enemy.position = spawnLogic.Spawn();
             enemies.push_back(enemy);
         }
 

@@ -1,11 +1,16 @@
 #include "Spawn_logic.h"
 
-Vector2 SpawnLogic::Spawn(int screenWidth, int screenHeight) {
+void SpawnLogic::PassData(Vector2 playerPos) {
+    pX = playerPos.x;
+    pY = playerPos.y;
+}
+
+Vector2 SpawnLogic::Spawn() {
     Vector2 Locations[4] = {
-    {(float)screenWidth - 100.0f, (float)screenHeight - 100.0f},
-    {(float)screenWidth - 100.0f, (float)screenHeight + 100.0f},
-    {(float)screenWidth + 100.0f, (float)screenHeight - 100.0f},
-    {(float)screenWidth + 100.0f, (float)screenHeight + 100.0f}
+    {(float) pX - 400.0f, (float)pY - 400.0f},
+    {(float) pX - 400.0f, (float)pY + 400.0f},
+    {(float) pX + 400.0f, (float)pY - 400.0f},
+    {(float) pX + 400.0f, (float)pY + 400.0f}
     };
 
 	int locationNumber = GetRandomValue(0, 4);
