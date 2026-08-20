@@ -18,6 +18,7 @@ class Player {
 		Texture2D texture;
 
 		void Update();
+		void Reset();
 		void DrawRec();
 		void DrawTex();
 		void FaceMouse(Camera2D& camera);

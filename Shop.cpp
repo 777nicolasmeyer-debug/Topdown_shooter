@@ -2,10 +2,16 @@
 #include "raylib.h"
 #include "Shop.h"
 
-void Shop::Draw(Player& player)
+void Shop::Draw(Player& player, Texture2D background)
 {
     BeginDrawing();
     ClearBackground(BLACK);
+    DrawTexture(
+        background,
+        0,
+        0,
+        WHITE
+    );
 
     DrawText(TextFormat("Health: %d", player.health), 10, 10, 20, GREEN);
     DrawText(TextFormat("Gold: %d", player.money), 10, 30, 20, GREEN);

@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "raylib.h"
 #include <cmath>
+#include <vector>
 class Collisions;
 class Projectile;
 
@@ -127,4 +128,3 @@ Projectile  Enemy::Shoot() {
 
 	return bullet;
 }
-

@@ -120,4 +120,12 @@ Rectangle Player::GetRect()
 		dimension
 	};
 }
+
+void Player::Reset() {
+	position = { 400, 400 };
+	rotation = 0;
+	health = 50;
+	money = 0;
+	active = true;
+}
 									

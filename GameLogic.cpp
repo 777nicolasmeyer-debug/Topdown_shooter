@@ -7,12 +7,30 @@ class GameManager;
 class HandleDamage handleDamage;
 float shootTimer = GetRandomValue(1, 3);
 
-
 void Game::Run(int SCREENWIDTH, int SCREENHEIGHT, GameManager& gameManager) {
     spawnLogic.PassData(player.position);
+    Vector2 playerPos = player.GetCenter();
+
+    if (playerPos.x > camera.target.x + 100)
+    {
+        camera.target.x = playerPos.x - 100;
+    }
+    else if (playerPos.x < camera.target.x - 100)
+    {
+        camera.target.x = playerPos.x + 100;
+    }
+    if (playerPos.y > camera.target.y + 100)
+    {
+        camera.target.y = playerPos.y - 100;
+    }
+    else if (playerPos.y < camera.target.y - 100)
+    {
+        camera.target.y = playerPos.y + 100;
+    }
 	if (player.active) {
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             bullets.push_back(player.Shoot());
+            PlaySound(blasterSound);
         }
 
         if (spawnLogic.CanSpawn() && enemies.size() <= 20)
@@ -28,7 +46,6 @@ void Game::Run(int SCREENWIDTH, int SCREENHEIGHT, GameManager& gameManager) {
         BeginDrawing();
         ClearBackground(BLACK);
 
-        camera.target = player.GetCenter();
         BeginMode2D(camera);
         
         for (int x = -5; x <= 5; x++)
@@ -82,7 +99,6 @@ void Game::Run(int SCREENWIDTH, int SCREENHEIGHT, GameManager& gameManager) {
         }
 
         
-        for (Enemy& enemy : enemies) {
             for (Enemy& enemy : enemies)
             {
                 enemy.shootTimer -= GetFrameTime();
@@ -91,9 +107,9 @@ void Game::Run(int SCREENWIDTH, int SCREENHEIGHT, GameManager& gameManager) {
                 {
                     enemy.shootTimer = (float)GetRandomValue(5, 10);
                     bullets.push_back(enemy.Shoot());
+                    PlaySound(blasterSound);
                 }
             }
-        }
 
         for (Enemy& enemy : enemies) {
             for (Projectile& bullet : bullets) {
@@ -120,6 +136,7 @@ void Game::Run(int SCREENWIDTH, int SCREENHEIGHT, GameManager& gameManager) {
         DrawText(TextFormat("Health: %d", player.health), 10, 10, 20, GREEN);
         DrawText(TextFormat("Gold: %d", player.money), 10, 30, 20, GREEN);
 
+
         EndDrawing();
 
     }  
@@ -132,8 +149,11 @@ Player& Game::GetPlayer() {
     return player;
 }
 
-Game::Game() {
+Texture2D Game::GetBackground() {
+    return background;
+}
 
+Game::Game() {
     camera.target = player.GetCenter();
     camera.offset = {
         GetScreenWidth() / 2.0f,
@@ -142,6 +162,18 @@ Game::Game() {
     camera.zoom = 1.0f;
     camera.rotation = 0.0f;
 
-    background = LoadTexture("../../../assets/background.png");
-    
+    background = LoadTexture("../../../assets/background.png"); 
+    bgMusic = LoadMusicStream("../../../assets/spaceMusic.mp3");
+    blasterSound = LoadSound("../../../assets/blaster.mp3");
+    btnClick = LoadSound("../../../assets/click.mp3");
+    gameMusic = LoadMusicStream("../../../assets/gameplayMusic.mp3");
+    deathMusic = LoadMusicStream("../../../assets/death.mp3");
+}
+
+void Game::Reset(GameManager& gameManager) {
+    gameManager.state = GameState::Menu;
+    player.Reset();
+    enemies.clear();
+    bullets.clear();
+    camera.target = player.GetCenter();
 }
